@@ -1,18 +1,4 @@
 window.onload = () => {
-  const myform = document.getElementById('myform');
-  if (myform) {
-    myform.addEventListener('submit', event => {
-      event.preventDefault();
-      const username = document.getElementById('name').value;
-      const password = document.getElementById('password').value;
-      if (username === 'admin' && password === 'admin') {
-        window.location.href = './admin/admin-dashboard.html';
-      } else {
-        window.location.href = './attendant/attendant-dashboard.html';
-      }
-    });
-  }
-
   const open = document.getElementById('open');
   const close = document.getElementById('close');
   toggle_button(open, close);
@@ -37,13 +23,13 @@ window.addEventListener('resize', () => {
   }
 });
 
-openDrawer = options => {
+const openDrawer = options => {
   document.getElementById('drawer').style = options.style;
   document.getElementById('open').style.display = options.open;
   document.getElementById('close').style.display = options.close;
 };
 
-toggle_button = (open, close) => {
+const toggle_button = (open, close) => {
   if (open && close) {
     open.addEventListener('click', event => {
       openDrawer({
@@ -62,3 +48,5 @@ toggle_button = (open, close) => {
     });
   }
 };
+
+
