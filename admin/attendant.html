@@ -58,23 +58,45 @@
           <h2>New Attendant</h2>
           <form action="#" id="aform">
             <label for="name"> <h4>Full Name</h4> </label>
-            <input type="text" name="name" placeholder="Full Name..." />
+            <input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Full Name..."
+            />
             <label for="username"> <h4>Username</h4> </label>
-            <input type="text" name="username" placeholder="Username..." />
+            <input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Username..."
+            />
             <label for="password"> <h4>Password</h4> </label>
-            <input type="password" name="password" placeholder="Password..." />
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Password..."
+            />
             <label for="password1"> <h4>Re-enter Password</h4> </label>
             <input
               type="password"
               name="password1"
+              id="password1"
               placeholder="Re-enter Password..."
             />
+            <label for="roles"> <h4>Select Role</h4> </label>
+            <select name="roles" id="roles">
+              <option value="attendant" selected="selected">Attendant</option>
+              <option value="admin">Admin</option>
+            </select>
             <input
               type="submit"
               name="submit"
               value="Submit"
               class="wide-btn"
             />
+            <div id="errors"></div>
           </form>
         </div>
         <div class="inner-content-one">
@@ -85,7 +107,7 @@
                 <th>#</th>
                 <th>Full Name</th>
                 <th>Username</th>
-                <th>Access Level</th>
+                <th>Role</th>
                 <th>Date Created</th>
                 <th>Action</th>
               </tr>

@@ -1,28 +1,3 @@
-window.onload = () => {
-  const open = document.getElementById('open');
-  const close = document.getElementById('close');
-  toggle_button(open, close);
-};
-
-window.addEventListener('resize', () => {
-  const drawer = document.getElementById('drawer');
-  if (drawer) {
-    if (this.window.innerWidth > 615) {
-      openDrawer({
-        style: 'width: 150px;',
-        open: 'none',
-        close: 'none'
-      });
-    } else {
-      openDrawer({
-        style: 'width: 0;',
-        open: 'block',
-        close: 'none'
-      });
-    }
-  }
-});
-
 const openDrawer = options => {
   document.getElementById('drawer').style = options.style;
   document.getElementById('open').style.display = options.open;
@@ -49,4 +24,27 @@ const toggle_button = (open, close) => {
   }
 };
 
+window.onload = () => {
+  const open = document.getElementById('open');
+  const close = document.getElementById('close');
+  toggle_button(open, close);
+};
 
+window.addEventListener('resize', () => {
+  const drawer = document.getElementById('drawer');
+  if (drawer) {
+    if (this.window.innerWidth > 615) {
+      openDrawer({
+        style: 'width: 150px;',
+        open: 'none',
+        close: 'none'
+      });
+    } else {
+      openDrawer({
+        style: 'width: 0;',
+        open: 'block',
+        close: 'none'
+      });
+    }
+  }
+});
