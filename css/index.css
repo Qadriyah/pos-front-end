@@ -15,7 +15,10 @@ body {
   background: blue;
   background: linear-gradient(to right, navy, rgb(27, 116, 250));
   background: -webkit-linear-gradient(to right, navy, rgb(27, 116, 250));
+  background: -webkit-gradient(linear, to right, navy, rgb(27, 116, 250));
   background: -moz-linear-gradient(to right, navy, rgb(27, 116, 250));
+  background: -o-linear-gradient(to right, navy, rgb(27, 116, 250));
+  background: -ms-linear-gradient(to right, navy, rgb(27, 116, 250));
   position: fixed;
   top: 0;
   z-index: 1;
@@ -349,7 +352,10 @@ body {
   background: blue;
   background: linear-gradient(to right, navy, rgb(27, 116, 250));
   background: -webkit-linear-gradient(to right, navy, rgb(27, 116, 250));
+  background: -webkit-gradient(linear, to right, navy, rgb(27, 116, 250));
   background: -moz-linear-gradient(to right, navy, rgb(27, 116, 250));
+  background: -o-linear-gradient(to right, navy, rgb(27, 116, 250));
+  background: -ms-linear-gradient(to right, navy, rgb(27, 116, 250));
 }
 
 .landing-content {
