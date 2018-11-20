@@ -1,7 +1,7 @@
 class API {
   constructor(url) {
     this.url = url;
-    // this.endpoints = endpoints;
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   getRole(token) {
@@ -87,6 +87,17 @@ class API {
         if (revoked) {
           localStorage.removeItem('jwtToken');
           window.location.href = '../index.html';
+        }
+      })
+      .catch(err => console.log(err));
+  }
+
+  deleteItem(e) {
+    this.delete('/products/delete/1')
+      .then(data => {
+        const { msg } = data;
+        if (msg === 'Success') {
+          window.location.href = href;
         }
       })
       .catch(err => console.log(err));
