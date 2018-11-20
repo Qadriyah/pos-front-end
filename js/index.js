@@ -25,9 +25,18 @@ const toggle_button = (open, close) => {
 };
 
 window.onload = () => {
+  const api = new API('http://localhost:5000/api/v1');
   const open = document.getElementById('open');
   const close = document.getElementById('close');
+  const logout = document.getElementById('logout');
   toggle_button(open, close);
+
+  if (logout) {
+    logout.addEventListener('click', event => {
+      event.preventDefault();
+      api.logoutUser();
+    });
+  }
 };
 
 window.addEventListener('resize', () => {
