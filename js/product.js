@@ -20,6 +20,36 @@ api.get('/products/category').then(data => {
   }
 });
 
+api.get('/products').then(data => {
+  const { msg, products } = data;
+  let productList = [];
+  if (products) {
+    let counter = 1;
+    products.forEach(product => {
+      productList += `
+        <tr>
+            <td>${counter}</td>
+            <td>${product.product_name}</td>
+            <td>${product.category_name}</td>
+            <td class="align-right">${product.product_price.toLocaleString()}</td>
+            <td class="align-center">
+              <i class="fas fa-trash-alt trash tooltip">
+                <span class="tooltiptext">Delete</span>
+              </i>
+              <a href="edit-product.html">
+                <i class="fas fa-edit tooltip">
+                  <span class="tooltiptext">Edit</span>
+                </i>
+              </a>
+            </td>
+        </tr>
+        `;
+      counter++;
+    });
+    pList.innerHTML = productList;
+  }
+});
+
 if (bform) {
   bform.addEventListener('submit', event => {
     event.preventDefault();
