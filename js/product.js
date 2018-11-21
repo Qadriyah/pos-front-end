@@ -40,11 +40,9 @@ api.get('/products').then(data => {
               <i class="fas fa-trash-alt trash tooltip" id=${product.id}>
                 <span class="tooltiptext">Delete</span>
               </i>
-              <a href="#">
-                <i class="fas fa-edit tooltip">
-                  <span class="tooltiptext">Edit</span>
-                </i>
-              </a>
+              <i class="fas fa-edit tooltip" id=${product.id}>
+                <span class="tooltiptext">Edit</span>
+              </i>
             </td>
         </tr>
         `;
@@ -87,7 +85,6 @@ const timerId = setInterval(() => {
   for (let i = 0; i < trashIt.length; i++) {
     trashIt[i].addEventListener('click', event => {
       event.preventDefault();
-      console.log(event.target);
       const action = confirm('Deleting product...\nDo you want to continue?');
       if (action) {
         const product_id = event.target.id;
@@ -100,4 +97,20 @@ const timerId = setInterval(() => {
 
 setTimeout(() => {
   clearInterval(timerId);
+}, 1000);
+
+const editTimer = setInterval(() => {
+  const editIt = document.getElementsByClassName('fa-edit');
+  for (let i = 0; i < editIt.length; i++) {
+    editIt[i].addEventListener('click', event => {
+      event.preventDefault();
+      const product_id = event.target.id;
+      localStorage.setItem('pid', product_id);
+      window.location.href = 'edit-product.html';
+    });
+  }
+}, 1000);
+
+setTimeout(() => {
+  clearInterval(editTimer);
 }, 1000);

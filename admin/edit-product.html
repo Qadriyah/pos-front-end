@@ -55,34 +55,20 @@
       <div class="content">
         <div class="inner-content">
           <h2>Edit Product</h2>
-          <form action="#">
-            <input
-              type="hidden"
-              name="product_id"
-              id="product_id"
-              value="Rice"
-            />
+          <form action="#" id="cform">
+            <label for="category_id"> <h4>Category</h4> </label>
             <select id="category_id" name="category_id"></select>
             <label for="product_name"> <h4>Product Name</h4> </label>
-            <input
-              type="text"
-              name="product_name"
-              id="product_name"
-              value="Rice"
-            />
+            <input type="text" name="product_name" id="product_name" />
             <label for="product_price"> <h4>Product Price</h4> </label>
-            <input
-              type="text"
-              name="product_price"
-              id="product_price"
-              value="10000"
-            />
+            <input type="text" name="product_price" id="product_price" />
             <input
               type="submit"
               name="submit"
               value="Update"
               class="wide-btn"
             />
+            <div id="errors"></div>
           </form>
         </div>
       </div>
