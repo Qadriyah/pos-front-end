@@ -5,6 +5,10 @@ const bform = document.getElementById('bform');
 const select = document.getElementById('category_id');
 const pList = document.getElementById('p-list');
 
+function editProduct(product_id) {
+  console.log(product_id);
+}
+
 api.get('/products/category').then(data => {
   const { categories } = data;
   let dropdown;
@@ -33,10 +37,10 @@ api.get('/products').then(data => {
             <td>${product.category_name}</td>
             <td class="align-right">${product.product_price.toLocaleString()}</td>
             <td class="align-center">
-              <i class="fas fa-trash-alt trash tooltip">
+              <i class="fas fa-trash-alt trash tooltip" id=${product.id}>
                 <span class="tooltiptext">Delete</span>
               </i>
-              <a href="edit-product.html">
+              <a href="#">
                 <i class="fas fa-edit tooltip">
                   <span class="tooltiptext">Edit</span>
                 </i>
@@ -77,3 +81,23 @@ if (bform) {
     });
   });
 }
+
+const timerId = setInterval(() => {
+  const trashIt = document.getElementsByClassName('fa-trash-alt');
+  for (let i = 0; i < trashIt.length; i++) {
+    trashIt[i].addEventListener('click', event => {
+      event.preventDefault();
+      console.log(event.target);
+      const action = confirm('Deleting product...\nDo you want to continue?');
+      if (action) {
+        const product_id = event.target.id;
+        const endpoint = '/products/delete/' + product_id;
+        api.deleteItem(endpoint, 'admin-dashboard.html');
+      }
+    });
+  }
+}, 1000);
+
+setTimeout(() => {
+  clearInterval(timerId);
+}, 1000);

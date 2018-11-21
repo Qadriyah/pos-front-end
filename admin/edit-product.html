@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Admin | Edit Product</title>
     <link rel="stylesheet" href="../css/index.css" />
-    <script src="../js/index.js"></script>
+    <script src="../js/api.js"></script>
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
@@ -56,10 +56,27 @@
         <div class="inner-content">
           <h2>Edit Product</h2>
           <form action="#">
-            <label for="product"> <h4>Product Name</h4> </label>
-            <input type="text" name="product" id="product" value="Rice" />
-            <label for="product"> <h4>Product Price</h4> </label>
-            <input type="text" name="qty" id="qty" value="10000" />
+            <input
+              type="hidden"
+              name="product_id"
+              id="product_id"
+              value="Rice"
+            />
+            <select id="category_id" name="category_id"></select>
+            <label for="product_name"> <h4>Product Name</h4> </label>
+            <input
+              type="text"
+              name="product_name"
+              id="product_name"
+              value="Rice"
+            />
+            <label for="product_price"> <h4>Product Price</h4> </label>
+            <input
+              type="text"
+              name="product_price"
+              id="product_price"
+              value="10000"
+            />
             <input
               type="submit"
               name="submit"
@@ -70,5 +87,7 @@
         </div>
       </div>
     </div>
+    <script src="../js/index.js"></script>
+    <script src="../js/edit_product.js"></script>
   </body>
 </html>

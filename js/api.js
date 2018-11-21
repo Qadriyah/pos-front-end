@@ -92,8 +92,8 @@ class API {
       .catch(err => console.log(err));
   }
 
-  deleteItem(e) {
-    this.delete('/products/delete/1')
+  deleteItem(endpoint, href) {
+    this.delete(endpoint)
       .then(data => {
         const { msg } = data;
         if (msg === 'Success') {
@@ -101,5 +101,9 @@ class API {
         }
       })
       .catch(err => console.log(err));
+  }
+
+  editProduct(product_id) {
+    console.log(product_id);
   }
 }
