@@ -10,6 +10,33 @@ const stockLevels = document.getElementById('stock-levels');
 const fform = document.getElementById('fform');
 const pcategories = document.getElementById('categories');
 
+// Get product categories
+api.get('/products/category').then(data => {
+  const { categories } = data;
+  let product_categories = [];
+  if (categories) {
+    let counter = 1;
+    categories.forEach(category => {
+      product_categories += `
+        <tr>
+          <td>${counter}</td>
+          <td>${category.category_name}</td>
+          <td class="align-center">
+            <i class="fas fa-trash-alt trash tooltip" id=${category.id}>
+              <span class="tooltiptext">Delete</span>
+            </i>
+            <i class="fas fa-edit tooltip" id=${category.id}>
+              <span class="tooltiptext">Edit</span>
+            </i>
+          </td>
+        </tr>
+      `;
+      counter++;
+    });
+    pcategories.innerHTML = product_categories;
+  }
+});
+
 // Get products menu
 api.get('/products').then(data => {
   const { products } = data;
