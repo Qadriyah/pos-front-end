@@ -7,6 +7,8 @@ const pList = document.getElementById('p-list');
 const dform = document.getElementById('dform');
 const product_menu = document.getElementById('pid');
 const stockLevels = document.getElementById('stock-levels');
+const fform = document.getElementById('fform');
+const pcategories = document.getElementById('categories');
 
 // Get products menu
 api.get('/products').then(data => {
@@ -182,3 +184,23 @@ api.get('/products/stock').then(data => {
     stockLevels.innerHTML = items;
   }
 });
+
+// Add product categories
+if (fform) {
+  fform.addEventListener('submit', event => {
+    event.preventDefault();
+    category_name = document.getElementById('category').value;
+    errors.innerHTML = spinner;
+    api.privatePost('/products/category', { category_name }).then(data => {
+      const { msg } = data;
+      errors.style = 'color: red; padding: 10px;';
+      if (msg === 'Success') {
+        window.location.href = 'category.html';
+      } else if (msg === 'Category already exists' || msg === 'Failure') {
+        errors.innerHTML = msg;
+      } else {
+        errors.innerHTML = 'Some fields are missing';
+      }
+    });
+  });
+}
