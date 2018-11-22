@@ -20,7 +20,7 @@ api
           <td>${user.roles}</td>
           <td>${date.getDate() +
             '/' +
-            date.getMonth() +
+            String(date.getMonth() + 1) +
             '/' +
             date.getFullYear()}</td>
           <td class='align-center'>

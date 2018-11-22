@@ -222,6 +222,7 @@ body {
 
 .totals {
   font-weight: bold;
+  text-align: right;
 }
 
 .tooltip {

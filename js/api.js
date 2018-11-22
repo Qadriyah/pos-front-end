@@ -1,7 +1,6 @@
 class API {
   constructor(url) {
     this.url = url;
-    this.deleteItem = this.deleteItem.bind(this);
   }
 
   getUserData(token) {
@@ -101,9 +100,5 @@ class API {
         }
       })
       .catch(err => console.log(err));
-  }
-
-  editProduct(product_id) {
-    console.log(product_id);
   }
 }
