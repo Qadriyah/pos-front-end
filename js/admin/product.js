@@ -7,35 +7,6 @@ const pList = document.getElementById('p-list');
 const dform = document.getElementById('dform');
 const product_menu = document.getElementById('pid');
 const stockLevels = document.getElementById('stock-levels');
-const fform = document.getElementById('fform');
-const pcategories = document.getElementById('categories');
-
-// Get product categories
-api.get('/products/category').then(data => {
-  const { categories } = data;
-  let product_categories = [];
-  if (categories) {
-    let counter = 1;
-    categories.forEach(category => {
-      product_categories += `
-        <tr>
-          <td>${counter}</td>
-          <td>${category.category_name}</td>
-          <td class="align-center">
-            <i class="fas fa-trash-alt trash tooltip" id=${category.id}>
-              <span class="tooltiptext">Delete</span>
-            </i>
-            <i class="fas fa-edit tooltip" id=${category.id}>
-              <span class="tooltiptext">Edit</span>
-            </i>
-          </td>
-        </tr>
-      `;
-      counter++;
-    });
-    pcategories.innerHTML = product_categories;
-  }
-});
 
 // Get products menu
 api.get('/products').then(data => {
@@ -211,23 +182,3 @@ api.get('/products/stock').then(data => {
     stockLevels.innerHTML = items;
   }
 });
-
-// Add product categories
-if (fform) {
-  fform.addEventListener('submit', event => {
-    event.preventDefault();
-    category_name = document.getElementById('category').value;
-    errors.innerHTML = spinner;
-    api.privatePost('/products/category', { category_name }).then(data => {
-      const { msg } = data;
-      errors.style = 'color: red; padding: 10px;';
-      if (msg === 'Success') {
-        window.location.href = 'category.html';
-      } else if (msg === 'Category already exists' || msg === 'Failure') {
-        errors.innerHTML = msg;
-      } else {
-        errors.innerHTML = 'Some fields are missing';
-      }
-    });
-  });
-}
