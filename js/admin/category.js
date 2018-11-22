@@ -70,3 +70,20 @@ const categoryId = setInterval(() => {
 setTimeout(() => {
   clearInterval(categoryId);
 }, 1000);
+
+// Edit product event listener
+const editTimer = setInterval(() => {
+  const editIt = document.getElementsByClassName('fa-edit');
+  for (let i = 0; i < editIt.length; i++) {
+    editIt[i].addEventListener('click', event => {
+      event.preventDefault();
+      const category_id = event.target.id;
+      localStorage.setItem('cid', category_id);
+      window.location.href = 'edit-category.html';
+    });
+  }
+}, 1000);
+
+setTimeout(() => {
+  clearInterval(editTimer);
+}, 1000);

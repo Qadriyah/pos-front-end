@@ -53,7 +53,6 @@ if (cform) {
       ) {
         errors.innerHTML = msg;
       } else if (msg === 'Success') {
-        console.log(msg);
         window.location.href = 'admin-dashboard.html';
       } else {
         errors.innerHTML = 'Some fields are missing';
