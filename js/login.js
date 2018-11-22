@@ -2,11 +2,11 @@ const api = new API('http://localhost:5000/api/v1');
 
 const myform = document.getElementById('myform');
 if (localStorage.jwtToken) {
-  if (api.getRole() === 'admin') {
+  if (api.getUserData(localStorage.jwtToken).roles === 'admin') {
     window.location.href = './admin/admin-dashboard.html';
   }
 
-  if (api.getRole() === 'attendant') {
+  if (api.getUserData(localStorage.jwtToken).roles === 'attendant') {
     window.location.href = './attendant/attendant-dashboard.html';
   }
 }
@@ -27,7 +27,7 @@ if (myform) {
         const { token, success } = data;
         if (success) {
           localStorage.setItem('jwtToken', 'Bearer ' + token);
-          if (api.getRole(token) === 'admin') {
+          if (api.getUserData(token).roles === 'admin') {
             window.location.href = './admin/admin-dashboard.html';
           } else {
             window.location.href = './attendant/attendant-dashboard.html';

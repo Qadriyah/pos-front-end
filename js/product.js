@@ -1,14 +1,30 @@
 const api = new API('http://localhost:5000/api/v1');
-const spinner = '<img src="../media/loader.gif" style="width: 50px" />';
+const spinner = '<img src="../media/loader.gif" style="width: 100px" />';
 const errors = document.getElementById('errors');
 const bform = document.getElementById('bform');
 const select = document.getElementById('category_id');
 const pList = document.getElementById('p-list');
+const dform = document.getElementById('dform');
+const product_menu = document.getElementById('pid');
+const stockLevels = document.getElementById('stock-levels');
 
-function editProduct(product_id) {
-  console.log(product_id);
-}
+// Get products menu
+api.get('/products').then(data => {
+  const { products } = data;
+  let menu;
+  if (products) {
+    menu = products.map((product, key) => {
+      return `
+                <option key=${key} value=${product.id}>${
+        product.product_name
+      }</option>
+            `;
+    });
+    product_menu.innerHTML = menu;
+  }
+});
 
+// Get product categories
 api.get('/products/category').then(data => {
   const { categories } = data;
   let dropdown;
@@ -24,8 +40,9 @@ api.get('/products/category').then(data => {
   }
 });
 
+// Get a list of products
 api.get('/products').then(data => {
-  const { msg, products } = data;
+  const { products } = data;
   let productList = [];
   if (products) {
     let counter = 1;
@@ -52,6 +69,7 @@ api.get('/products').then(data => {
   }
 });
 
+// Add product to database
 if (bform) {
   bform.addEventListener('submit', event => {
     event.preventDefault();
@@ -63,23 +81,22 @@ if (bform) {
       product_name,
       product_price: Number(product_price)
     };
-    console.log(newProduct);
     errors.innerHTML = spinner;
     api.privatePost('/products', newProduct).then(data => {
-      const { msg, product } = data;
+      const { msg } = data;
       errors.style = 'color: red; padding: 10px;';
       if (msg === 'Success') {
         window.location.href = 'admin-dashboard.html';
       } else if (msg === 'Product already exists' || msg === 'Server error') {
         errors.innerHTML = msg;
       } else {
-        console.log(msg);
         errors.innerHTML = 'Some fields are missing';
       }
     });
   });
 }
 
+// Delete product from database
 const timerId = setInterval(() => {
   const trashIt = document.getElementsByClassName('fa-trash-alt');
   for (let i = 0; i < trashIt.length; i++) {
@@ -99,6 +116,7 @@ setTimeout(() => {
   clearInterval(timerId);
 }, 1000);
 
+// Edit product event listener
 const editTimer = setInterval(() => {
   const editIt = document.getElementsByClassName('fa-edit');
   for (let i = 0; i < editIt.length; i++) {
@@ -114,3 +132,31 @@ const editTimer = setInterval(() => {
 setTimeout(() => {
   clearInterval(editTimer);
 }, 1000);
+
+// Add stock item
+if (dform) {
+  dform.addEventListener('submit', event => {
+    event.preventDefault();
+    const product_id = document.getElementById('pid').value;
+    const quntity = document.getElementById('qty').value;
+    const item = {
+      product_id: Number(product_id),
+      quantity: Number(quntity)
+    };
+    errors.innerHTML = spinner;
+    api.privatePost('/products/stock', item).then(data => {
+      const { msg } = data;
+      errors.style = 'color: red; padding: 10px;';
+      if (msg === 'Success') {
+        window.location.href = 'stock.html';
+      } else if (
+        msg === 'Failure' ||
+        msg === 'Quantity should be greater than zero'
+      ) {
+        errors.innerHTML = msg;
+      } else {
+        errors.innerHTML = 'Some fields are missing';
+      }
+    });
+  });
+}

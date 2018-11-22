@@ -4,10 +4,10 @@ class API {
     this.deleteItem = this.deleteItem.bind(this);
   }
 
-  getRole(token) {
+  getUserData(token) {
     try {
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
-      return decodedToken.user_claims.roles;
+      return decodedToken.user_claims;
     } catch (e) {
       return null;
     }

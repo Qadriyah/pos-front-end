@@ -29,6 +29,7 @@ window.onload = () => {
   const open = document.getElementById('open');
   const close = document.getElementById('close');
   const logout = document.getElementById('logout');
+  const profile = document.getElementById('profile');
   toggle_button(open, close);
 
   if (logout) {
@@ -36,6 +37,11 @@ window.onload = () => {
       event.preventDefault();
       api.logoutUser();
     });
+  }
+
+  if (localStorage.jwtToken && profile) {
+    const user = api.getUserData(localStorage.jwtToken);
+    profile.innerHTML = user.fullname;
   }
 };
 
