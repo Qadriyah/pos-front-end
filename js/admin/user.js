@@ -24,10 +24,10 @@ api
             '/' +
             date.getFullYear()}</td>
           <td class='align-center'>
-            <i class="fas fa-trash-alt trash tooltip">
+            <i class="fas fa-trash-alt trash tooltip" id=${user.id}>
               <span class="tooltiptext">Delete</span>
             </i>
-            <i class="fas fa-edit tooltip">
+            <i class="fas fa-edit tooltip" id=${user.id}>
               <span class="tooltiptext">Edit</span>
             </i>
           </td>
@@ -72,3 +72,23 @@ if (regForm) {
       .catch(err => console.log(err));
   });
 }
+
+// Delete product from database
+const timerId = setInterval(() => {
+  const trashIt = document.getElementsByClassName('fa-trash-alt');
+  for (let i = 0; i < trashIt.length; i++) {
+    trashIt[i].addEventListener('click', event => {
+      event.preventDefault();
+      const action = confirm('Deleting User...\nDo you want to continue?');
+      if (action) {
+        const user_id = event.target.id;
+        const endpoint = '/users/delete/' + user_id;
+        api.deleteItem(endpoint, 'attendant.html');
+      }
+    });
+  }
+}, 1000);
+
+setTimeout(() => {
+  clearInterval(timerId);
+}, 1000);
