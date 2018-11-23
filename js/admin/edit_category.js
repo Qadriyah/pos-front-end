@@ -23,6 +23,7 @@ if (fform) {
       })
       .then(data => {
         const { msg } = data;
+        localStorage.removeItem("cid");
         errors.style = 'color: red; padding: 10px;';
         if (msg === 'Category does not exist' || msg === 'Failure') {
           errors.innerHTML = msg;

@@ -73,7 +73,7 @@ if (regForm) {
   });
 }
 
-// Delete product from database
+// Delete user from database
 const timerId = setInterval(() => {
   const trashIt = document.getElementsByClassName('fa-trash-alt');
   for (let i = 0; i < trashIt.length; i++) {
@@ -91,4 +91,21 @@ const timerId = setInterval(() => {
 
 setTimeout(() => {
   clearInterval(timerId);
+}, 1000);
+
+// Edit user event listener
+const editTimer = setInterval(() => {
+  const editIt = document.getElementsByClassName('fa-edit');
+  for (let i = 0; i < editIt.length; i++) {
+    editIt[i].addEventListener('click', event => {
+      event.preventDefault();
+      const user_id = event.target.id;
+      localStorage.setItem('uid', user_id);
+      window.location.href = 'edit-user.html';
+    });
+  }
+}, 1000);
+
+setTimeout(() => {
+  clearInterval(editTimer);
 }, 1000);

@@ -46,6 +46,7 @@ if (cform) {
     api.update('/products/edit/' + Number(product_id), product).then(data => {
       const { msg } = data;
       errors.style = 'color: red; padding: 10px;';
+      localStorage.removeItem('pid');
       if (
         msg === 'Product does not exist' ||
         msg === 'Category does not exist' ||
