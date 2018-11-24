@@ -118,3 +118,23 @@ if (cart) {
     });
   });
 }
+
+// Delete user from database
+const timerId = setInterval(() => {
+  const trashIt = document.getElementsByClassName('fa-trash-alt');
+  for (let i = 0; i < trashIt.length; i++) {
+    trashIt[i].addEventListener('click', event => {
+      event.preventDefault();
+      const action = confirm('Deleting Cart Item...\nDo you want to continue?');
+      if (action) {
+        const cart_id = Number(event.target.id);
+        const endpoint = '/sales/cart/delete/' + cart_id;
+        api.deleteItem(endpoint, 'attendant-dashboard.html');
+      }
+    });
+  }
+}, 1000);
+
+setTimeout(() => {
+  clearInterval(timerId);
+}, 1000);
