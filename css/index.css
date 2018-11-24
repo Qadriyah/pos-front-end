@@ -501,6 +501,10 @@ input[type='date'] {
   border-radius: 8px;
 }
 
+.hide-contents {
+  display: none;
+}
+
 /*************************************************
                 Media Queries
 **************************************************/

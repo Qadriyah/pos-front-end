@@ -4,6 +4,7 @@ const errors = document.getElementById('errors');
 const productList = document.getElementById('product');
 const cart = document.getElementById('cart');
 const cartItems = document.getElementById('cart-items');
+const tbody = document.getElementById('tbody');
 
 // Get a product menu
 api.get('/products').then(data => {
@@ -18,6 +19,49 @@ api.get('/products').then(data => {
             `;
     });
     productList.innerHTML = menu;
+  }
+});
+
+// Display cart items
+errors.innerHTML = spinner;
+api.get('/sales/cart').then(data => {
+  const { cart, msg } = data;
+  let items = [];
+  if (msg === 'Success') {
+    let total = 0;
+    cart.forEach(item => {
+      total += item.total;
+      items += `
+            <tr>
+                <td>${item.product_name}</td>
+                <td class="align-center">${item.quantity}</td>
+                <td class="align-right">${item.unit_price.toLocaleString()}</td>
+                <td class="align-right">${item.total.toLocaleString()}</td>
+                <td class="align-center">
+                <i class="fas fa-trash-alt trash tooltip" id=${item.id}>
+                    <span class="tooltiptext">Delete</span>
+                </i>
+                </td>
+            </tr>
+            `;
+    });
+    items += `
+        <tr class='totals'>
+            <td colspan='3'>Total</td>
+            <td>${total.toLocaleString()}</td>
+            <td class="align-center">
+                <i class="fas fa-check-circle tooltip">
+                    <span class="tooltiptext">Create</span>
+                </i>
+            </td>
+        </tr>
+    `;
+    errors.innerHTML = null;
+    tbody.innerHTML = items;
+    cartItems.classList.remove('hide-contents');
+  } else {
+    errors.style = 'color: red; padding: 10px;';
+    errors.innerHTML = msg;
   }
 });
 
@@ -36,7 +80,9 @@ if (cart) {
       const { cart, msg } = data;
       let items = [];
       if (msg === 'Success') {
+        let total = 0;
         cart.forEach(item => {
+          total += item.total;
           items += `
             <tr>
                 <td>${item.product_name}</td>
@@ -51,20 +97,20 @@ if (cart) {
             </tr>
             `;
         });
-        let table = `
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th class="align-center">Qty</th>
-                    <th class="align-right">Unit Price</th>
-                    <th class="align-right">Line Total</th>
-                    <th class="align-center">Action</th>
-                </tr>
-            </thead>
-            <tbody>${items}</tbody>
+        items += `
+            <tr class='totals'>
+                <td colspan='3'>Total</td>
+                <td>${total.toLocaleString()}</td>
+                <td class="align-center">
+                    <i class="fas fa-check-circle tooltip">
+                        <span class="tooltiptext">Create</span>
+                    </i>
+                </td>
+            </tr>
         `;
         errors.innerHTML = null;
-        cartItems.innerHTML = table;
+        tbody.innerHTML = items;
+        cartItems.classList.remove('hide-contents');
       } else {
         errors.style = 'color: red; padding: 10px;';
         errors.innerHTML = msg;
