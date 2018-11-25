@@ -50,7 +50,7 @@ api.get('/sales/cart').then(data => {
             <td colspan='3'>Total</td>
             <td>${total.toLocaleString()}</td>
             <td class="align-center">
-                <i class="fas fa-check-circle tooltip">
+                <i class="fas fa-check-circle tooltip" id="sale-order">
                     <span class="tooltiptext">Create</span>
                 </i>
             </td>
@@ -102,7 +102,7 @@ if (cart) {
                 <td colspan='3'>Total</td>
                 <td>${total.toLocaleString()}</td>
                 <td class="align-center">
-                    <i class="fas fa-check-circle tooltip">
+                    <i class="fas fa-check-circle tooltip" id="sale-order">
                         <span class="tooltiptext">Create</span>
                     </i>
                 </td>
@@ -137,4 +137,25 @@ const timerId = setInterval(() => {
 
 setTimeout(() => {
   clearInterval(timerId);
+}, 1000);
+
+// Create sales record
+const saleId = setInterval(() => {
+  const createSale = document.getElementById('sale-order');
+  createSale.addEventListener('click', event => {
+    errors.innerHTML = spinner;
+    api.privatePost('/sales', {}).then(data => {
+      const { msg } = data;
+      if (msg === 'Success') {
+        window.location.href = 'attendant-dashboard.html';
+      } else {
+        errors.style = 'color: red; padding: 10px;';
+        errors.innerHTML = msg;
+      }
+    });
+  });
+}, 1000);
+
+setTimeout(() => {
+  clearInterval(saleId);
 }, 1000);
