@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Admin | Stock</title>
     <link rel="stylesheet" href="../css/index.css" />
-    <script src="../js/index.js"></script>
+    <script src="../js/api.js"></script>
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
@@ -66,46 +66,19 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Product</th>
+                <th>Product Name</th>
                 <th class="align-center">Quantity</th>
+                <th class="align-center">Stock Level</th>
                 <th class="align-center">Min Quantity</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Sugar</td>
-                <td class="align-center">100</td>
-                <td class="align-center">10</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Milk</td>
-                <td class="align-center">400</td>
-                <td class="align-center">25</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Bread</td>
-                <td class="align-center">50</td>
-                <td class="align-center">5</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>Flour</td>
-                <td class="align-center">150</td>
-                <td class="align-center">10</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>Rice</td>
-                <td class="align-center">90</td>
-                <td class="align-center">15</td>
-              </tr>
-            </tbody>
+            <tbody id="stock-levels"></tbody>
           </table>
+          <div id="errors"></div>
         </div>
       </div>
     </div>
+    <script src="../js/attendant/stock.js"></script>
+    <script src="../js/index.js"></script>
   </body>
 </html>
