@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <link rel="stylesheet" href="../css/index.css" />
-    <script src="../js/index.js"></script>
+    <script src="../js/api.js"></script>
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
@@ -61,17 +61,19 @@
       </div>
       <div class="content">
         <div class="product-list">
-          <h2>Miria's Profile</h2>
+          <h2 id="profile-name"></h2>
           <div class="profile">
             <div class="profile-item">No. of Sales Records</div>
             <div class="profile-item">No. of Products</div>
             <div class="profile-item">Total Worth</div>
-            <div class="profile-item">10</div>
-            <div class="profile-item">70</div>
-            <div class="profile-item">100,000</div>
+            <div class="profile-item" id="sales-records"></div>
+            <div class="profile-item" id="items"></div>
+            <div class="profile-item" id="amount"></div>
           </div>
         </div>
       </div>
     </div>
+    <script src="../js/attendant/profile.js"></script>
+    <script src="../js/index.js"></script>
   </body>
 </html>

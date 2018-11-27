@@ -1,4 +1,8 @@
 const api = new API('http://localhost:5000/api/v1');
+const user = api.getUserData(localStorage.jwtToken);
+if (user.roles !== 'attendant') {
+  window.location.href = '../admin/admin-dashboard.html';
+}
 const spinner = '<img src="../media/loader.gif" style="width: 100px" />';
 const errors = document.getElementById('errors');
 const salesView = document.getElementById('sales');
@@ -17,7 +21,11 @@ if (sform) {
     errors.innerHTML = spinner;
     const user_id = Number(user.id);
     api.privatePost('/sales/user/' + user_id, dateRange).then(data => {
-      const { orders } = data;
+      const { orders, msg } = data;
+      if (msg === 'Token has been revoked') {
+        localStorage.removeItem('jwtToken');
+        window.location.href = '../index.html';
+      }
       let items = [];
       let total_sales = 0;
       if (orders) {

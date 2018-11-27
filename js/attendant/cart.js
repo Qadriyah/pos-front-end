@@ -1,4 +1,11 @@
 const api = new API('http://localhost:5000/api/v1');
+const user = api.getUserData(localStorage.jwtToken);
+if (!user) {
+  console.log('loggedout');
+}
+if (user.roles !== 'attendant') {
+  window.location.href = '../admin/admin-dashboard.html';
+}
 const spinner = '<img src="../media/loader.gif" style="width: 100px" />';
 const errors = document.getElementById('errors');
 const productList = document.getElementById('product');
@@ -8,7 +15,11 @@ const tbody = document.getElementById('tbody');
 
 // Get a product menu
 api.get('/products').then(data => {
-  const { products } = data;
+  const { products, msg } = data;
+  if (msg === 'Token has been revoked') {
+    localStorage.removeItem('jwtToken');
+    window.location.href = '../index.html';
+  }
   let menu;
   if (products) {
     menu = products.map((product, key) => {
@@ -26,6 +37,10 @@ api.get('/products').then(data => {
 errors.innerHTML = spinner;
 api.get('/sales/cart').then(data => {
   const { cart, msg } = data;
+  if (msg === 'Token has been revoked') {
+    localStorage.removeItem('jwtToken');
+    window.location.href = '../index.html';
+  }
   let items = [];
   if (msg === 'Success') {
     let total = 0;
@@ -78,6 +93,10 @@ if (cart) {
     errors.innerHTML = spinner;
     api.privatePost('/sales/cart', cartItem).then(data => {
       const { cart, msg } = data;
+      if (msg === 'Token has been revoked') {
+        localStorage.removeItem('jwtToken');
+        window.location.href = '../index.html';
+      }
       let items = [];
       if (msg === 'Success') {
         let total = 0;
@@ -146,6 +165,10 @@ const saleId = setInterval(() => {
     errors.innerHTML = spinner;
     api.privatePost('/sales', {}).then(data => {
       const { msg } = data;
+      if (msg === 'Token has been revoked') {
+        localStorage.removeItem('jwtToken');
+        window.location.href = '../index.html';
+      }
       if (msg === 'Success') {
         window.location.href = 'attendant-dashboard.html';
       } else {

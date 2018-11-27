@@ -1,4 +1,8 @@
 const api = new API('http://localhost:5000/api/v1');
+const user = api.getUserData(localStorage.jwtToken);
+if (user.roles !== 'attendant') {
+  window.location.href = '../admin/admin-dashboard.html';
+}
 const spinner = '<img src="../media/loader.gif" style="width: 100px" />';
 const errors = document.getElementById('errors');
 const productList = document.getElementById('product');
@@ -9,6 +13,10 @@ const pform = document.getElementById('pform');
 errors.innerHTML = spinner;
 api.get('/products').then(data => {
   const { msg, products } = data;
+  if (msg === 'Token has been revoked') {
+    localStorage.removeItem('jwtToken');
+    window.location.href = '../index.html';
+  }
   if (msg === 'Success') {
     let menu = [
       `<option selected='selected' value='0'>All Products...</option>`
@@ -43,6 +51,10 @@ if (pform) {
     errors.innerHTML = spinner;
     api.get('/products/' + product_id).then(data => {
       const { products, msg } = data;
+      if (msg === 'Token has been revoked') {
+        localStorage.removeItem('jwtToken');
+        window.location.href = '../index.html';
+      }
       if (msg === 'Success') {
         let view = [];
         let counter = 1;

@@ -41,7 +41,15 @@ window.onload = () => {
 
   if (localStorage.jwtToken && profile) {
     const user = api.getUserData(localStorage.jwtToken);
+    if (!isTokenExpired) {
+      localStorage.removeItem('jwtToken');
+      window.location.href = '../index.html';
+    }
     profile.innerHTML = user.fullname;
+  } else {
+    if (!/index/.test(window.location.href)) {
+      window.location.href = '../index.html';
+    }
   }
 };
 
@@ -63,3 +71,11 @@ window.addEventListener('resize', () => {
     }
   }
 });
+
+const isTokenExpired = userClaims => {
+  const currentTime = Date.now() / 1000;
+  if (userClaims.exp < currentTime) {
+    return false;
+  }
+  return true;
+};

@@ -1,4 +1,8 @@
 const api = new API('http://localhost:5000/api/v1');
+const user = api.getUserData(localStorage.jwtToken);
+if (user.roles !== 'admin') {
+  window.location.href = '../attendant/attendant-dashboard.html';
+}
 const select = document.getElementById('category_id');
 let pname = document.getElementById('product_name');
 let pprice = document.getElementById('product_price');
@@ -7,7 +11,11 @@ const spinner = '<img src="../media/loader.gif" style="width: 100px" />';
 const errors = document.getElementById('errors');
 
 api.get('/products/' + Number(localStorage.pid)).then(data => {
-  const { products } = data;
+  const { products, msg } = data;
+  if (msg === 'Token has been revoked') {
+    localStorage.removeItem('jwtToken');
+    window.location.href = '../index.html';
+  }
   if (products) {
     pname.value = products[0].product_name;
     pprice.value = products[0].product_price;
@@ -45,6 +53,10 @@ if (cform) {
     errors.innerHTML = spinner;
     api.update('/products/edit/' + Number(product_id), product).then(data => {
       const { msg } = data;
+      if (msg === 'Token has been revoked') {
+        localStorage.removeItem('jwtToken');
+        window.location.href = '../index.html';
+      }
       errors.style = 'color: red; padding: 10px;';
       localStorage.removeItem('pid');
       if (

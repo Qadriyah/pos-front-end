@@ -1,4 +1,8 @@
 const api = new API('http://localhost:5000/api/v1');
+const user = api.getUserData(localStorage.jwtToken);
+if (user.roles !== 'admin') {
+  window.location.href = '../attendant/attendant-dashboard.html';
+}
 const spinner = '<img src="../media/loader.gif" style="width: 100px" />';
 const errors = document.getElementById('errors');
 const attendant_menu = document.getElementById('attendant');
@@ -7,7 +11,11 @@ const sales = document.getElementById('sales');
 
 // Get attendats list
 api.get('/attendants').then(data => {
-  const { users } = data;
+  const { users, msg } = data;
+  if (msg === 'Token has been revoked') {
+    localStorage.removeItem('jwtToken');
+    window.location.href = '../index.html';
+  }
   let menu = [`<option selected='selected' value='0'>All Attendants</option>`];
   if (users) {
     users.forEach(user => {
@@ -22,7 +30,11 @@ api.get('/attendants').then(data => {
 // Get all sales records
 errors.innerHTML = spinner;
 api.get('/sales').then(data => {
-  const { orders } = data;
+  const { orders, msg } = data;
+  if (msg === 'Token has been revoked') {
+    localStorage.removeItem('jwtToken');
+    window.location.href = '../index.html';
+  }
   let items = [];
   let total_sales = 0;
   if (orders) {
@@ -74,7 +86,11 @@ if (eform) {
     };
     errors.innerHTML = spinner;
     api.privatePost('/sales/records', data).then(data => {
-      const { orders } = data;
+      const { orders, msg } = data;
+      if (msg === 'Token has been revoked') {
+        localStorage.removeItem('jwtToken');
+        window.location.href = '../index.html';
+      }
       let items = [];
       let total_sales = 0;
       if (orders) {

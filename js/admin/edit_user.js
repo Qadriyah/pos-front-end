@@ -1,4 +1,8 @@
 const api = new API('http://localhost:5000/api/v1');
+const user = api.getUserData(localStorage.jwtToken);
+if (user.roles !== 'admin') {
+  window.location.href = '../attendant/attendant-dashboard.html';
+}
 const select = document.getElementById('roles');
 let fname = document.getElementById('name');
 let uname = document.getElementById('username');
@@ -8,7 +12,11 @@ const errors = document.getElementById('errors');
 
 // Get user by id
 api.get('/users/' + Number(localStorage.uid)).then(data => {
-  const { users } = data;
+  const { users, msg } = data;
+  if (msg === 'Token has been revoked') {
+    localStorage.removeItem('jwtToken');
+    window.location.href = '../index.html';
+  }
   const roles = [
     `<option selected='selected' value=${users[0].roles}>${
       users[0].roles
@@ -35,6 +43,10 @@ if (uform) {
     errors.innerHTML = spinner;
     api.update('/users/edit/' + Number(localStorage.uid), user).then(data => {
       const { msg } = data;
+      if (msg === 'Token has been revoked') {
+        localStorage.removeItem('jwtToken');
+        window.location.href = '../index.html';
+      }
       localStorage.removeItem('cid');
       errors.style = 'color: red; padding: 10px;';
       if (msg === 'Success') {

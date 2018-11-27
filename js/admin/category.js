@@ -1,4 +1,8 @@
 const api = new API('http://localhost:5000/api/v1');
+const user = api.getUserData(localStorage.jwtToken);
+if (user.roles !== 'admin') {
+  window.location.href = '../attendant/attendant-dashboard.html';
+}
 const spinner = '<img src="../media/loader.gif" style="width: 100px" />';
 const errors = document.getElementById('errors');
 const fform = document.getElementById('fform');
@@ -6,7 +10,11 @@ const pcategories = document.getElementById('categories');
 
 // Get product categories
 api.get('/products/category').then(data => {
-  const { categories } = data;
+  const { categories, msg } = data;
+  if (msg === 'Token has been revoked') {
+    localStorage.removeItem('jwtToken');
+    window.location.href = '../index.html';
+  }
   let product_categories = [];
   if (categories) {
     let counter = 1;
@@ -39,6 +47,10 @@ if (fform) {
     errors.innerHTML = spinner;
     api.privatePost('/products/category', { category_name }).then(data => {
       const { msg } = data;
+      if (msg === 'Token has been revoked') {
+        localStorage.removeItem('jwtToken');
+        window.location.href = '../index.html';
+      }
       errors.style = 'color: red; padding: 10px;';
       if (msg === 'Success') {
         window.location.href = 'category.html';

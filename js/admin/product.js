@@ -1,4 +1,8 @@
 const api = new API('http://localhost:5000/api/v1');
+const user = api.getUserData(localStorage.jwtToken);
+if (user.roles !== 'admin') {
+  window.location.href = '../attendant/attendant-dashboard.html';
+}
 const spinner = '<img src="../media/loader.gif" style="width: 100px" />';
 const errors = document.getElementById('errors');
 const bform = document.getElementById('bform');
@@ -10,7 +14,11 @@ const stockLevels = document.getElementById('stock-levels');
 
 // Get products menu
 api.get('/products').then(data => {
-  const { products } = data;
+  const { products, msg } = data;
+  if (msg === 'Token has been revoked') {
+    localStorage.removeItem('jwtToken');
+    window.location.href = '../index.html';
+  }
   let menu;
   if (products) {
     menu = products.map((product, key) => {
@@ -26,7 +34,11 @@ api.get('/products').then(data => {
 
 // Get product categories
 api.get('/products/category').then(data => {
-  const { categories } = data;
+  const { categories, msg } = data;
+  if (msg === 'Token has been revoked') {
+    localStorage.removeItem('jwtToken');
+    window.location.href = '../index.html';
+  }
   let dropdown;
   if (categories) {
     dropdown = categories.map((category, key) => {
@@ -42,7 +54,11 @@ api.get('/products/category').then(data => {
 
 // Get a list of products
 api.get('/products').then(data => {
-  const { products } = data;
+  const { products, msg } = data;
+  if (msg === 'Token has been revoked') {
+    localStorage.removeItem('jwtToken');
+    window.location.href = '../index.html';
+  }
   let productList = [];
   if (products) {
     let counter = 1;
@@ -84,6 +100,10 @@ if (bform) {
     errors.innerHTML = spinner;
     api.privatePost('/products', newProduct).then(data => {
       const { msg } = data;
+      if (msg === 'Token has been revoked') {
+        localStorage.removeItem('jwtToken');
+        window.location.href = '../index.html';
+      }
       errors.style = 'color: red; padding: 10px;';
       if (msg === 'Success') {
         window.location.href = 'admin-dashboard.html';
@@ -146,6 +166,10 @@ if (dform) {
     errors.innerHTML = spinner;
     api.privatePost('/products/stock', item).then(data => {
       const { msg } = data;
+      if (msg === 'Token has been revoked') {
+        localStorage.removeItem('jwtToken');
+        window.location.href = '../index.html';
+      }
       errors.style = 'color: red; padding: 10px;';
       if (msg === 'Success') {
         window.location.href = 'stock.html';
@@ -163,7 +187,11 @@ if (dform) {
 
 // Get stock levels
 api.get('/products/stock').then(data => {
-  const { stock } = data;
+  const { stock, msg } = data;
+  if (msg === 'Token has been revoked') {
+    localStorage.removeItem('jwtToken');
+    window.location.href = '../index.html';
+  }
   let items = [];
   if (stock) {
     let counter = 1;

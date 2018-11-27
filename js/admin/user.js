@@ -1,4 +1,8 @@
 const api = new API('http://localhost:5000/api/v1');
+const user = api.getUserData(localStorage.jwtToken);
+if (user.roles !== 'admin') {
+  window.location.href = '../attendant/attendant-dashboard.html';
+}
 const spinner = '<img src="../media/loader.gif" style="width: 50px" />';
 const errors = document.getElementById('errors');
 const regForm = document.getElementById('aform');
@@ -7,6 +11,10 @@ api
   .get('/users')
   .then(data => {
     const { msg, users } = data;
+    if (msg === 'Token has been revoked') {
+      localStorage.removeItem('jwtToken');
+      window.location.href = '../index.html';
+    }
     let activeUsers = [];
     if (users) {
       let counter = 1;
@@ -60,6 +68,10 @@ if (regForm) {
       .privatePost('/register', newUser)
       .then(data => {
         const { msg } = data;
+        if (msg === 'Token has been revoked') {
+          localStorage.removeItem('jwtToken');
+          window.location.href = '../index.html';
+        }
         errors.style = 'color: red; padding: 10px;';
         if (msg === 'Success') {
           window.location.href = 'attendant.html';
