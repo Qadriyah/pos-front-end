@@ -1,6 +1,6 @@
 class API {
   constructor() {
-    this.url = 'http://localhost:5000/api/v1';
+    this.url = 'https://pos-api-v1.herokuapp.com';
   }
 
   getUserData(token) {
