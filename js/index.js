@@ -44,13 +44,12 @@ window.onload = () => {
     const user = api.getUserData(localStorage.jwtToken);
     if (!isTokenExpired) {
       localStorage.removeItem('jwtToken');
-      //window.location.href = '../index.html';
+      window.location.href = '../index.html';
     }
     profile.innerHTML = user.fullname;
   } else {
-    console.log(!/index/.test(window.location.href));
     if (!/index/.test(window.location.href)) {
-      //window.location.href = 'index.html';
+      window.location.href = 'index.html';
     }
   }
 };
