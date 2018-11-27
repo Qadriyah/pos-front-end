@@ -40,13 +40,15 @@ window.onload = () => {
   }
 
   if (localStorage.jwtToken && profile) {
+    console.log('ONE');
     const user = api.getUserData(localStorage.jwtToken);
     if (!isTokenExpired) {
       localStorage.removeItem('jwtToken');
-      window.location.href = '../index.html';
+      //window.location.href = '../index.html';
     }
     profile.innerHTML = user.fullname;
   } else {
+    Console.log('TWO');
     if (!/index/.test(window.location.href)) {
       //window.location.href = 'index.html';
     }
