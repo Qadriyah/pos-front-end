@@ -1,4 +1,4 @@
-const api = new API('http://localhost:5000/api/v1');
+const api = new API();
 
 const myform = document.getElementById('myform');
 if (localStorage.jwtToken) {

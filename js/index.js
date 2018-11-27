@@ -25,7 +25,7 @@ const toggle_button = (open, close) => {
 };
 
 window.onload = () => {
-  const api = new API('http://localhost:5000/api/v1');
+  const api = new API();
   const open = document.getElementById('open');
   const close = document.getElementById('close');
   const logout = document.getElementById('logout');

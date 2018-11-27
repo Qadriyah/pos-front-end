@@ -1,4 +1,4 @@
-const api = new API('http://localhost:5000/api/v1');
+const api = new API();
 const user = api.getUserData(localStorage.jwtToken);
 if (user.roles !== 'admin') {
   window.location.href = '../attendant/attendant-dashboard.html';
