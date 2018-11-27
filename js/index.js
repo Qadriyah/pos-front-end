@@ -48,7 +48,7 @@ window.onload = () => {
     }
     profile.innerHTML = user.fullname;
   } else {
-    Console.log('TWO');
+    console.log(!/index/.test(window.location.href));
     if (!/index/.test(window.location.href)) {
       //window.location.href = 'index.html';
     }
