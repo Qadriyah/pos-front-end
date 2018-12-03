@@ -1,5 +1,7 @@
-/__pycache__
-/.pytest_cache
+# Libs
 /.vscode
-/api
-/myenviron
+/node_modules
+
+# Files
+package-lock.json
+package.json
