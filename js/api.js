@@ -1,3 +1,6 @@
+// const fetch = require('node-fetch');
+// const atob = require('atob');
+
 class API {
   constructor() {
     this.url = 'http://localhost:5000/api/v1';
@@ -8,7 +11,8 @@ class API {
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
       return decodedToken.user_claims;
     } catch (e) {
-      return null;
+      print(e);
+      return e;
     }
   }
 
@@ -101,4 +105,16 @@ class API {
       })
       .catch(err => console.log(err));
   }
+
+  getShortDate(date) {
+    return (
+      date.getDate() +
+      '/' +
+      String(date.getMonth() + 1) +
+      '/' +
+      date.getFullYear()
+    );
+  }
 }
+
+module.exports = API;

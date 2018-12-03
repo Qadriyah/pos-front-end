@@ -1,3 +1,4 @@
+//const API = require('./api');
 const openDrawer = options => {
   document.getElementById('drawer').style = options.style;
   document.getElementById('open').style.display = options.open;

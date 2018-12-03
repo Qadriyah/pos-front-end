@@ -135,33 +135,13 @@ if (cart) {
         errors.innerHTML = msg;
       }
     });
+    cart.reset();
   });
 }
 
-// Delete user from database
-const timerId = setInterval(() => {
-  const trashIt = document.getElementsByClassName('fa-trash-alt');
-  for (let i = 0; i < trashIt.length; i++) {
-    trashIt[i].addEventListener('click', event => {
-      event.preventDefault();
-      const action = confirm('Deleting Cart Item...\nDo you want to continue?');
-      if (action) {
-        const cart_id = Number(event.target.id);
-        const endpoint = '/sales/cart/delete/' + cart_id;
-        api.deleteItem(endpoint, 'attendant-dashboard.html');
-      }
-    });
-  }
-}, 1000);
-
-setTimeout(() => {
-  clearInterval(timerId);
-}, 1000);
-
-// Create sales record
-const saleId = setInterval(() => {
-  const createSale = document.getElementById('sale-order');
-  createSale.addEventListener('click', event => {
+cartItems.addEventListener('click', event => {
+  if (event.target.id === 'sale-order') {
+    // Create sales order
     errors.innerHTML = spinner;
     api.privatePost('/sales', {}).then(data => {
       const { msg } = data;
@@ -176,9 +156,16 @@ const saleId = setInterval(() => {
         errors.innerHTML = msg;
       }
     });
-  });
-}, 1000);
-
-setTimeout(() => {
-  clearInterval(saleId);
-}, 1000);
+  } else {
+    const id = Number(event.target.id);
+    if (id > 0) {
+      // Delete cart item
+      const action = confirm('Deleting Cart Item...\nDo you want to continue?');
+      if (action) {
+        const cart_id = Number(event.target.id);
+        const endpoint = '/sales/cart/delete/' + cart_id;
+        api.deleteItem(endpoint, 'attendant-dashboard.html');
+      }
+    }
+  }
+});
